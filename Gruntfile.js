@@ -41,5 +41,5 @@ module.exports = function(grunt) {
 
 
   // 告诉grunt当我们在终端中输入grunt时需要做些什么
-  grunt.registerTask('default', ['jshint','csslint','uglify']);
+  grunt.registerTask('default', ['jshint','csslint','uglify','watch']);
 };
