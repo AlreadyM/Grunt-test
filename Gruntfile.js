@@ -1,3 +1,7 @@
+/* 此配置目的是为了对编写的js文件，css文件进行语法校验；
+和对校验通过的js或css文件进行压缩以便发布到服务器的时候文件是最小体积的js或者css
+that`s all
+*/
 // 包装函数
 module.exports = function(grunt) {
 
@@ -27,16 +31,17 @@ module.exports = function(grunt) {
     },
     // cssmin 配置信息(压缩css)
     cssmin: {
-      minify: {
-        expand: true,
-        cwd: 'css/',
-        src: ['*.css', '!*.min.css'],
-        dest: 'css/',
-        ext: '.min.css'
+      minify: {// 压缩css文件的配置信息
+        expand: true,// 开关属性(启用下面的选项)
+        cwd: 'src/',// 指定被压缩的文件路径
+        src: ['*.css', '!base.css'],// 匹配指定的目录下的所有css文件(排除.min.css文件)
+        dest: 'build/',// 生成的压缩文件存放路径
+        ext: '.min.css'// 生成的压缩文件命名规则(.min.css)
       },
-      combine: {
+      combine: {// 合并css文件的配置信息
         files: {
-          'css/out.min.css': ['css/part1.min.css', 'css/part2.min.css']
+          'build/<%=pkg.name%>-<%=pkg.version%>.min.css': ['build/base-1.min.css', 'build/am-slider.min.css']// 输出合并后的文件路径 和被合并的指定文件
+          // (写入一个目录应该是该目录下所有文件被合并吧)
         }
       }
     },
@@ -44,7 +49,7 @@ module.exports = function(grunt) {
     watch:{
       build:{
         files:['Gruntfile.js','src/*.js',"src/*.css"],// 此处配置被监测文件
-        tasks:['jshint','csslint','uglify'],// 此处配置监测到变动后执行的任务（事件）
+        tasks:['jshint','uglify','csslint','cssmin'],// 此处配置监测到变动后执行的任务（事件）
         options:{spawn:false}// (任务规则，额我也不知道是什么意思。空了再研究)
       }
     }
@@ -53,11 +58,12 @@ module.exports = function(grunt) {
   //加载插件模块
   // 告诉grunt我们需要用到的插件
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-csslint');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
 
   // 告诉grunt当我们在终端中输入grunt时需要做些什么
-  grunt.registerTask('default', ['jshint','csslint','uglify','watch']);
+  grunt.registerTask('default', ['jshint','uglify','csslint','cssmin','watch']);
 };
