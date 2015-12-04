@@ -10,15 +10,15 @@ module.exports = function(grunt) {
   var uglifySrc = ['src/js/*.js','src/*.js'],
         uglifySave = 'build/js/<%=pkg.name%>-<%=pkg.version%>.min.js';
 
-  var csslintSrc = 'src/style/*.css';
+  var csslintSrc = 'src/css/*.css';
 
-  var cssmin_minifySrc = 'src/style/',
+  var cssmin_minifySrc = 'src/css/',
         cssmin_minifySave = 'build/css/',
         cssmin_minifyincludeExcept = ['*.css',"!base.css"],
         cssmin_combineSave = ['build/css/*.min.css'];
 
   var watch_file = ['Gruntfile.js','src/*/*.js',"src/*/*.css"],// 被监测的文件(文件夹)
-        watch_tasks = ['jshint','uglify']; // 监测到变动后执行的任务(tasks)
+        watch_tasks = ['jshint','uglify','csslint','cssmin'];// 监测到变动后执行的任务(tasks)
 
   // 任务配置,所有插件的配置信息
   grunt.initConfig({
