@@ -62,6 +62,47 @@ module.exports = function(grunt) {
 				},
 			// livereload task End
 
+			// copy file task Start
+			copy:{
+				cp_main:{
+					files:[
+						{
+							expand:true,
+							cwd:'src/',
+							src:'**/*',
+							dest:'dest/'
+						}
+					]
+				},
+				cp_html:{
+					files:[
+						{
+							expand:true,
+							cwd:'src/page',
+							src:['*.html','*.htm'],
+							dest:'dest/'
+						}
+					]
+				},
+				images:{
+					files:[
+						{
+							expand:true,
+							cwd:'src/images/',
+							src:['*.jpg','*.png','*.gif'],
+							dest:'dest/images'
+						}
+					]
+				}
+			},
+			// copy End
+
+			//clean Start
+			clean:{
+				dist:{
+					src:['dest/**/*']
+				}
+			},
 			// minifile Start
 			  	// 任务配置,所有插件的配置信息
 			    // jshint配置信息(检查js语法的插件)
@@ -126,6 +167,8 @@ module.exports = function(grunt) {
 	// grunt.initConfig配置完毕
 
 	// 加载插件
+		grunt.loadNpmTasks('grunt-contrib-copy');
+		grunt.loadNpmTasks('grunt-contrib-clean');
 		grunt.loadNpmTasks('grunt-contrib-jshint');
 		grunt.loadNpmTasks('grunt-contrib-uglify');
 		grunt.loadNpmTasks('grunt-contrib-csslint');
