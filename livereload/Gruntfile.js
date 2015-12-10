@@ -1,4 +1,6 @@
 module.exports = function(grunt) {
+	require('load-grunt-tasks')(grunt);
+
 	// LiveReload Start
 		// LiveReload的默认端口号，你也可以改成你想要的端口号
 		var lrPort = 35729;
@@ -93,6 +95,16 @@ module.exports = function(grunt) {
 							dest:'dest/images'
 						}
 					]
+				},
+				cp_css:{
+					files:[
+						{
+							expand:true,
+							cwd:'src/css',
+							src:['*.css'],
+							dest:'.tmp/'
+						}
+					]
 				}
 			},
 			// copy End
@@ -161,22 +173,42 @@ module.exports = function(grunt) {
 					//	tasks:watch_tasks,// 此处配置监测到变动后执行的任务（事件）
 					//	options:{spawn:false}// (任务规则，额我也不知道是什么意思。空了再研究)
 					//}
-				}
+				},
 			// watch End
+			// 自定义build任务(压缩js、css，复制html、image)
+				build:{
+					options:{},
+				    // jshint配置信息(检查js语法的插件)
+				    jshint:{
+				    	options:{
+				    		jshintrc:'.jshintrc'// jshint检测的语法规则在.jshintrc外部文件内配置规则
+				    	},
+				    	js:jshintSrc// jshint检测语法的对象文件(此处添加Gruntfile.js 是为了保证在编写grunt任务的js文件也同时被检查)
+				    },
+					    // uglify插件的配置信息(压缩js文件的插件)
+					uglify: {
+					    compressjs: {
+					        src: uglifySrc,// 被压缩的对象
+					        dest: uglifySave // 压缩后的文件存放位置和命名规则
+					    }
+					}
+				}
+			// build End
 		});
 	// grunt.initConfig配置完毕
 
 	// 加载插件
-		grunt.loadNpmTasks('grunt-contrib-copy');
-		grunt.loadNpmTasks('grunt-contrib-clean');
-		grunt.loadNpmTasks('grunt-contrib-jshint');
-		grunt.loadNpmTasks('grunt-contrib-uglify');
-		grunt.loadNpmTasks('grunt-contrib-csslint');
-		grunt.loadNpmTasks('grunt-contrib-cssmin');
-		grunt.loadNpmTasks('grunt-contrib-connect');
-		grunt.loadNpmTasks('grunt-contrib-watch');
+		// grunt.loadNpmTasks('grunt-contrib-copy');
+		// grunt.loadNpmTasks('grunt-contrib-clean');
+		// grunt.loadNpmTasks('grunt-contrib-jshint');
+		// grunt.loadNpmTasks('grunt-contrib-uglify');
+		// grunt.loadNpmTasks('grunt-contrib-csslint');
+		// grunt.loadNpmTasks('grunt-contrib-cssmin');
+		// grunt.loadNpmTasks('grunt-contrib-connect');
+		// grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// 自定义任务
 		grunt.registerTask('default', ['connect', 'watch']);
 		grunt.registerTask('hintmini', ['jshint','uglify','csslint','cssmin']);
+		grunt.registerTask('build', ['build']);
 };
