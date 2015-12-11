@@ -2,6 +2,7 @@
   "name": "test-grunt",
   "version": "1.0.1",
   "devDependencies": {
+    "autoprefixer": "^6.0.2",
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.7.0",
     "grunt-contrib-copy": "^0.8.2",
