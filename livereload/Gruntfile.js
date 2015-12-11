@@ -209,6 +209,7 @@ module.exports = function(grunt) {
 
 	// 自定义任务
 		grunt.registerTask('default', ['connect', 'watch']);
+		grunt.registerTask('preview',['jshint','autoprefixer']);
 		grunt.registerTask('hintmini', ['jshint','uglify','csslint','cssmin']);
 		grunt.registerTask('build', ['build']);
 };
